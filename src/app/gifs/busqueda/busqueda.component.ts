@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-busqueda',
@@ -6,11 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class BusquedaComponent implements OnInit {
+export class BusquedaComponent {
+  @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
 
-  constructor() { }
+  buscar() {
+    const valor = this.txtBuscar.nativeElement.value;
+    console.log(valor);
 
-  ngOnInit(): void {
+    /* Después de insertar el gif en el buscador, lo borra del input */
+    this.txtBuscar.nativeElement.value = '';
   }
-
 }
