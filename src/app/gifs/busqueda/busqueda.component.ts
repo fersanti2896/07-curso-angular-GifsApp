@@ -14,7 +14,13 @@ export class BusquedaComponent {
   constructor(private gifService: GifsService) { }
 
   buscar() {
+    /* Extra el valor de la caja del input */
     const valor = this.txtBuscar.nativeElement.value;
+
+    /* No deja que se guarde espacios en el input */
+    if(valor.trim().length === 0) {
+      return; 
+    }
 
     /* Le pasa el valor a la función buscarGifs que está en el service y que lo guarda en un arreglo */
     this.gifService.buscarGifs(valor);
