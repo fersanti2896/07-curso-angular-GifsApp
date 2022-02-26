@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Gif, SearchGifsResponse } from '../interface/gifs.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class GifsService {
   private _historial: string[] = [];
 
   /* Aqui almacenaremos la data que devuelve el api */
-  public resultados: any[] = [];
+  public resultados: Gif[] = [];
 
   get historial() {
     /* Rompemos la referencia al arreglo original usando el operador spread */
@@ -34,8 +35,8 @@ export class GifsService {
     console.log(this._historial);
 
     /* Realizando la petición HTTP con el módulo httpClient al API de Gifs */
-    this.http.get(`${this.apiURL}?api_key=${this.apiKey}&q=${query}&limit=10`)
-      .subscribe((resp: any) => {
+    this.http.get<SearchGifsResponse>(`${this.apiURL}?api_key=${this.apiKey}&q=${query}&limit=10`)
+      .subscribe((resp: SearchGifsResponse) => {
         console.log(resp.data)
         this.resultados = resp.data;
     });
