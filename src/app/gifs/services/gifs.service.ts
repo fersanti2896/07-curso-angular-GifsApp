@@ -21,9 +21,8 @@ export class GifsService {
   /* Inyectamos el mpodule */
   constructor(private http: HttpClient) { 
     /* Reconstruimos lo que se tiene en el LocalStorage en la plataforma del cliente */
-    if(localStorage.getItem('historial')) {
-      this._historial = JSON.parse(localStorage.getItem('historial')!);
-    }
+    this._historial = JSON.parse(localStorage.getItem('historial')!);
+    this.resultados = JSON.parse(localStorage.getItem('resultados')!);
    }
 
   buscarGifs(query: string = '') {
@@ -38,6 +37,9 @@ export class GifsService {
 
       /* Guardamos la busqueda en el LocalStorage */
       localStorage.setItem('historial', JSON.stringify(this._historial));
+
+      /* Guardamos las imagenes en el LocalStorage */
+      localStorage.setItem('resultados', JSON.stringify(this.resultados));
     }
 
     console.log(this._historial);
