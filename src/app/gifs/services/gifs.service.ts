@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Gif, SearchGifsResponse } from '../interface/gifs.interface';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { Gif, SearchGifsResponse } from '../interface/gifs.interface';
 })
 export class GifsService {
   private apiKey = 'fgqXZEJAho3ZnAxqJm2yftTQuFKhtkUH';
-  private apiURL = 'https://api.giphy.com/v1/gifs/search';
+  private apiURL = 'https://api.giphy.com/v1/gifs';
   private _historial: string[] = [];
 
   /* Aqui almacenaremos la data que devuelve el api */
@@ -43,9 +43,17 @@ export class GifsService {
     }
 
     console.log(this._historial);
+    
+    /* Construye todos los parametros cuando se hace la petición a la API */
+    const params = new HttpParams()
+          .set('api_key', this.apiKey)
+          .set('limit', '10')
+          .set('q', query);
+
+    console.log(params.toString());
 
     /* Realizando la petición HTTP con el módulo httpClient al API de Gifs */
-    this.http.get<SearchGifsResponse>(`${this.apiURL}?api_key=${this.apiKey}&q=${query}&limit=10`)
+    this.http.get<SearchGifsResponse>(`${this.apiURL}/search`, { params: params })
       .subscribe((resp: SearchGifsResponse) => {
         console.log(resp.data)
         this.resultados = resp.data;
