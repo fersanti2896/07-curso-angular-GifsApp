@@ -42,7 +42,7 @@ export class GifsService {
       localStorage.setItem('resultados', JSON.stringify(this.resultados));
     }
 
-    console.log(this._historial);
+    // console.log(this._historial);
     
     /* Construye todos los parametros cuando se hace la petición a la API */
     const params = new HttpParams()
@@ -50,12 +50,12 @@ export class GifsService {
           .set('limit', '10')
           .set('q', query);
 
-    console.log(params.toString());
+    // console.log(params.toString());
 
     /* Realizando la petición HTTP con el módulo httpClient al API de Gifs */
     this.http.get<SearchGifsResponse>(`${this.apiURL}/search`, { params: params })
       .subscribe((resp: SearchGifsResponse) => {
-        console.log(resp.data)
+        // console.log(resp.data)
         this.resultados = resp.data;
     });
   }
